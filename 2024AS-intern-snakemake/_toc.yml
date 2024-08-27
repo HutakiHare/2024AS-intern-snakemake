@@ -12,6 +12,7 @@ parts:
     chapters:
       - file: mamba_Setup
       - file: 環境設置(environment.yaml)
+      - file: 劇本(script.sh)
       - file: 規則(rule)
       - file: 規則屬性(rule attribute)
       - file: 配置文件(config.yaml)
