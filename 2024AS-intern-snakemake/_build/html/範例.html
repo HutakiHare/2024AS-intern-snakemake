@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -187,6 +187,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mamba_Setup.html">mamba Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E7%92%B0%E5%A2%83%E8%A8%AD%E7%BD%AE%28environment.yaml%29.html">環境設置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="%E5%8A%87%E6%9C%AC%28script.sh%29.html">劇本</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E8%A6%8F%E5%89%87%28rule%29.html">rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E8%A6%8F%E5%89%87%E5%B1%AC%E6%80%A7%28rule%20attribute%29.html">rule attribute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%28config.yaml%29.html">配置文件 (config.yaml)</a></li>
@@ -368,7 +369,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -384,6 +387,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ex1-data-analysis-of-saccharomyces-cerevisiae-brewer-s-yeast">EX1: Data analysis of saccharomyces cerevisiae ( Brewer’s yeast)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ex2">EX2: 台北市金價與結婚人數分析(以前面為提及過的內容為主)</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -395,6 +407,8 @@ document.write(`
                   
   <section id="id1">
 <h1>範例<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<section id="ex1-data-analysis-of-saccharomyces-cerevisiae-brewer-s-yeast">
+<h2><a class="reference external" href="https://pid.depositar.io/ark:37281/k56253r3p">EX1: Data analysis of saccharomyces cerevisiae ( Brewer’s yeast)</a><a class="headerlink" href="#ex1-data-analysis-of-saccharomyces-cerevisiae-brewer-s-yeast" title="Link to this heading">#</a></h2>
 <p>(credit to <a class="reference external" href="https://github.com/snakemake-workflows/rna-seq-star-deseq2">Catalog example</a>)</p>
 <p>(1) 作者在depositar上資料集放入script,Snakefile,測資, workflow.zip(optional)</p>
 <p><img alt="data" src="_images/data.png" /></p>
@@ -428,10 +442,129 @@ document.write(`
 <blockquote>
 <div><p>report的html檔</p>
 </div></blockquote>
+</section>
+<section id="ex2">
+<h2><a class="reference external" href="https://pid.depositar.io/ark:37281/k5b8f3n3j">EX2: 台北市金價與結婚人數分析</a>(以前面為提及過的內容為主)<a class="headerlink" href="#ex2" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>利用而外的pyhton code得到金價與結婚對數的bar chart</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># make_bar_chart.py</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+
+<span class="c1"># Access the input and output files from Snakemake</span>
+<span class="n">input_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">snakemake</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">output_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">snakemake</span><span class="o">.</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="s1">&#39;marriage&#39;</span> <span class="ow">in</span> <span class="n">input_file</span><span class="p">:</span>
+    <span class="n">col1</span> <span class="o">=</span> <span class="s1">&#39;結婚對數/總計[對]&#39;</span>
+    <span class="n">col2</span> <span class="o">=</span> <span class="s1">&#39;年別&#39;</span>
+    <span class="n">layout_title</span> <span class="o">=</span> <span class="s1">&#39;台北結婚對數變化圖&#39;</span>
+    <span class="n">ytitle</span> <span class="o">=</span> <span class="s1">&#39;結婚對數/總計[對]&#39;</span>
+    <span class="n">markcolor</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+<span class="k">elif</span> <span class="s1">&#39;economy&#39;</span> <span class="ow">in</span> <span class="n">input_file</span><span class="p">:</span>
+    <span class="n">col1</span> <span class="o">=</span> <span class="s1">&#39;黃金[飾金]市價[元/臺錢]&#39;</span>
+    <span class="n">col2</span> <span class="o">=</span> <span class="s1">&#39;年底別&#39;</span>
+    <span class="n">layout_title</span> <span class="o">=</span> <span class="s1">&#39;台北黃金市價變化圖&#39;</span>
+    <span class="n">ytitle</span> <span class="o">=</span> <span class="s1">&#39;黃金市價[元/臺錢]&#39;</span>
+    <span class="n">markcolor</span> <span class="o">=</span> <span class="s1">&#39;gold&#39;</span>
+
+<span class="n">bar</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">col2</span><span class="p">],</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">col1</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">markcolor</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">layout</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="n">layout_title</span><span class="p">,</span>
+    <span class="n">title_font_size</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="n">xaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;年分&quot;</span><span class="p">),</span>
+    <span class="n">yaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">ytitle</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">bar</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_html</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>在snakefile裡產生html檔</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Snakefile</span>
+
+	<span class="o">/..</span><span class="n">more</span><span class="o">../</span>
+<span class="n">rule</span> <span class="n">mbar_chart</span><span class="p">:</span>
+    <span class="nb">input</span><span class="p">:</span>
+        <span class="s2">&quot;resource/tp-marriage.csv&quot;</span>
+    <span class="n">output</span><span class="p">:</span>
+        <span class="s2">&quot;result/bar/m-bar.html&quot;</span>
+    <span class="n">script</span><span class="p">:</span>
+        <span class="s2">&quot;scripts/make_bar_chart.py&quot;</span>
+
+	<span class="o">/..</span><span class="n">more</span><span class="o">../</span>
+
+<span class="n">rule</span> <span class="n">custom_report</span><span class="p">:</span>
+    
+    <span class="o">/..</span><span class="n">more</span><span class="o">../</span>
+
+    <span class="n">output</span><span class="p">:</span>
+        <span class="s2">&quot;new_report.html&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dag_graph.svg&quot;</span>
+    <span class="n">run</span><span class="p">:</span>
+        <span class="c1"># generate the DAG graph</span>
+        <span class="n">shell</span><span class="p">(</span><span class="s2">&quot;snakemake --dag | dot -Tsvg &gt; </span><span class="si">{output[1]}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># read report content</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">report</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">report_content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+       
+        <span class="c1"># read CSV file contents</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">m_csv</span><span class="p">)</span> <span class="k">as</span> <span class="n">f1</span><span class="p">:</span>
+            <span class="n">csv_content1</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">e_csv</span><span class="p">)</span> <span class="k">as</span> <span class="n">f2</span><span class="p">:</span>
+            <span class="n">csv_content2</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+       
+        <span class="c1"># generate the new HTML content</span>
+        <span class="n">new_content</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        &lt;!DOCTYPE html&gt;</span>
+<span class="s2">        &lt;html&gt;</span>
+<span class="s2">        &lt;head&gt;</span>
+<span class="s2">            &lt;title&gt;Report of the Relation Between Economy and Marriage&lt;/title&gt;</span>
+<span class="s2">        &lt;/head&gt;</span>
+<span class="s2">        &lt;body&gt;</span>
+<span class="s2">            &lt;h1&gt;Snakemake Report&lt;/h1&gt;</span>
+
+<span class="s2">           /..more../</span>
+
+<span class="s2">        &lt;/body&gt;</span>
+<span class="s2">        &lt;/html&gt;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+       
+        <span class="c1"># write the new report</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">new_content</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<blockquote>
+<div><p>output 出 三個檔案</p>
+</div></blockquote>
+<ol class="arabic simple">
+<li><p>dag-graph<br />
+<img alt="dag-graph" src="_images/dag-graph.png" /></p></li>
+<li><p>new_report<br />
+<img alt="new_report" src="_images/new_report.png" /></p></li>
+<li><p>report<br />
+<img alt="old_report" src="_images/default_report.png" /></p></li>
+</ol>
 <p>github link:
 depositar: <a class="reference external" href="https://pid.depositar.io/ark:37281/k56253r3p">ex1:Data analysis of saccharomyces cerevisiae ( Brewer’s yeast)
 </a>, <a class="reference external" href="https://pid.depositar.io/ark:37281/k5b8f3n3j">ex2: toy example-relation of golg proce and marriage number</a><br />
 webpage link: <a class="reference external" href="https://hutakihare.github.io/2027AS-intern-snakemake/">https://hutakihare.github.io/2027AS-intern-snakemake/</a></p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -479,6 +612,22 @@ webpage link: <a class="reference external" href="https://hutakihare.github.io/2
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ex1-data-analysis-of-saccharomyces-cerevisiae-brewer-s-yeast">EX1: Data analysis of saccharomyces cerevisiae ( Brewer’s yeast)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ex2">EX2: 台北市金價與結婚人數分析(以前面為提及過的內容為主)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
