@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -420,16 +420,13 @@ conda activate snakemake
 snakemake  --cores all --use-conda
 </pre></div>
 </div>
-<blockquote>
-<div><ul class="simple">
-<li><p>先確認目前有沒snakemake</p></li>
-</ul>
+<ul>
+<li><p>先確認目前有沒snakemake</p>
 <p>-&gt;  沒有就安裝</p>
 <p>-&gt;  有就啟動環境</p>
-<ul class="simple">
+</li>
 <li><p>因為在建立環境時會問y/n，所以加 -y 回答</p></li>
 </ul>
-</div></blockquote>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>if ! command -v snakemake &amp;&gt; /dev/null
 then
     echo &quot;Snakemake not found, installing...&quot;
@@ -440,9 +437,7 @@ then
 fi
 </pre></div>
 </div>
-<blockquote>
-<div><p>ex2(視範例)的用法，不適下載snakemake與snakedeploy，而是安裝environment.yaml裡所需的環境，以 <code class="docutils literal notranslate"><span class="pre">||</span></code> 來判斷若已有環境，則看是否更新</p>
-</div></blockquote>
+<p>ex2(視範例)的用法，不適下載snakemake與snakedeploy，而是安裝environment.yaml裡所需的環境，以 <code class="docutils literal notranslate"><span class="pre">||</span></code> 來判斷若已有環境，則看是否更新</p>
 </section>
 
     <script type="text/x-thebe-config">

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -402,8 +402,8 @@ document.write(`
 </ul>
 <blockquote>
 <div><p>放入這個rule會用到的檔案(可以不用用到的都放，但放較好)，為達成workflow，會放入前一個rule的output來強調順序</p>
-<p>路徑名需加”</p>
-<p>多個輸出以**,<strong>分開 (ex: “report.zip”</strong>,** directory(“data”))</p>
+<p>路徑名需加 <strong>“ “</strong></p>
+<p>多個輸出以 <strong>,</strong> 分開 (ex: “report.zip” <strong>,</strong> directory(“data”))</p>
 <p>有放在input的，在其他地方使用時，就可以用{input}取代，反之，若沒有，則得打出完整路徑(ex: workflow/Snakefile )，有多個input時，在其他地方按順在input的順序以{input[0]},{input[1]}…使用</p>
 <p>指定rule的輸出為input: rules.rule_name,output</p>
 </div></blockquote>
@@ -412,8 +412,8 @@ document.write(`
 </ul>
 <blockquote>
 <div><p>放入這個rule會輸出的檔案(可以不用都放，但放較好)，為達成workflow，駛下一個rule可以靠的此rule的output建立順序</p>
-<p>路徑名需加” “</p>
-<p>多個輸出以**,<strong>分開 (ex: “report.zip”</strong>,** directory(“data”))</p>
+<p>路徑名需加 <strong>“ “</strong></p>
+<p>多個輸出以 <strong>,</strong> 分開 (ex: “report.zip” <strong>,</strong> directory(“data”))</p>
 <p>有放在output的，在其他地方使用時，就可以用{output}取代，反之，若沒有，則得打出完整路徑，有多個output時，在其他地方按順在output的順序以{output[0]},{output[1]}…使用</p>
 </div></blockquote>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rule</span> <span class="n">generate_report</span><span class="p">:</span>
@@ -433,9 +433,9 @@ document.write(`
 </ul>
 <blockquote>
 <div><p>寫入所要執行的shell指令</p>
-<p>單個指令用**” “** (ex: “snakemake -s workflow/Snakefile –report {output}”)</p>
+<p>單個指令用 <strong>“ “</strong> (ex: “snakemake -s workflow/Snakefile –report {output}”)</p>
 <p>多個指令用 <strong>‘’’ ‘’’</strong></p>
-<p>指令與python程式碼都要用**””” “””**包住全部，<strong>僅python_code要另外用 python -c “..python code.. “ 在包python程式碼</strong>，shell指令不用</p>
+<p>指令與python程式碼都要用 <strong>“”” “””</strong> 包住全部， <strong>僅python_code要另外用 python -c “..python code.. “ 在包python程式碼</strong> ，shell指令不用</p>
 </div></blockquote>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rule</span> <span class="n">data_update</span><span class="p">:</span>
     <span class="nb">input</span><span class="p">:</span>
@@ -458,7 +458,8 @@ document.write(`
 <li><p>run:</p></li>
 </ul>
 <blockquote>
-<div><p>直接放入pyhton程式碼，不用” “</p>
+<div><p>直接放入python程式碼，不用 “ “</p>
+<p>加入shell指令用 shell(“/…shell command…/”)</p>
 </div></blockquote>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">report</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
